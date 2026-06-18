@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manancial Laranjas — Controle de Vendas</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <header class="header">
+    <h1>Manancial Laranjas</h1>
+    <p class="subtitle">Controle simples de lançamentos — Entradas e Saídas</p>
+  </header>
+
+  <main class="container">
+    <section class="form-card">
+      <h2>Novo Lançamento</h2>
+      <form id="txForm">
+        <div class="row">
+          <label>Tipo
+            <select id="type">
+              <option value="entrada">Entrada</option>
+              <option value="saida">Saída</option>
+            </select>
+          </label>
+
+          <label>Método
+            <select id="method">
+              <option value="dinheiro">Dinheiro</option>
+              <option value="debito">Cartão Débito</option>
+              <option value="credito">Cartão Crédito</option>
+              <option value="pix">PIX</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="row">
+          <label>Valor
+            <input id="amount" type="number" step="0.01" required placeholder="0.00">
+          </label>
+          <label>Data
+            <input id="date" type="date" required>
+          </label>
+        </div>
+
+        <label>Descrição
+          <input id="desc" type="text" placeholder="Ex: Venda de caixas">
+        </label>
+
+        <div class="actions">
+          <button id="addBtn" type="submit">Adicionar</button>
+          <button id="clearBtn" type="button">Limpar</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="report-card">
+      <h2>Relatório</h2>
+      <div id="summary" class="summary"></div>
+
+      <div class="filters">
+        <label>De: <input id="filterStart" type="date"></label>
+        <label>Até: <input id="filterEnd" type="date"></label>
+        <button id="applyFilter">Aplicar filtro</button>
+        <button id="clearFilter" type="button">Limpar filtro</button>
+      </div>
+
+      <div id="listWrap" class="list-wrap">
+        <table id="txTable">
+          <thead>
+            <tr><th>Data</th><th>Tipo</th><th>Método</th><th>Descrição</th><th>Valor</th><th>Ações</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="report-actions">
+        <button id="exportPdf">Exportar PDF</button>
+        <button id="printElgin">Imprimir (Elgin i9)</button>
+      </div>
+    </section>
+  </main>
+
+  <template id="receiptTemplate">
+    <div class="receipt">
+      <h2>Manancial Laranjas</h2>
+      <div id="receiptBody"></div>
+      <p class="small">Obrigado pela preferência</p>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

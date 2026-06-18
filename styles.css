@@ -1,0 +1,82 @@
+:root{
+  --bg:#f4f4f7; --card:#fff; --accent:#ff8c42; --muted:#666;
+}
+*{box-sizing:border-box}
+body{font-family:Inter, system-ui, Arial, sans-serif;margin:0;background:var(--bg);color:#222}
+.header{background:var(--accent);color:#fff;padding:18px;text-align:center}
+.header h1{margin:0;font-size:1.4rem}
+.subtitle{margin:4px 0 0;font-size:0.9rem;opacity:0.95}
+.container{max-width:980px;margin:18px auto;padding:12px}
+.form-card,.report-card{background:var(--card);padding:14px;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.06);margin-bottom:12px}
+.form-card h2,.report-card h2{margin:0 0 12px}
+.row{display:flex;gap:12px}
+label{display:flex;flex-direction:column;flex:1;font-size:0.95rem}
+input,select{padding:8px;border:1px solid #ddd;border-radius:6px;margin-top:6px}
+.actions{display:flex;gap:8px;margin-top:10px}
+.actions{display:flex;gap:8px;margin-top:10px}
+button{background:var(--accent);color:#fff;border:none;padding:10px 12px;border-radius:6px;cursor:pointer}
+button[type="button"]{background:#888}
+.filters{display:flex;gap:8px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.filters label{display:flex;flex-direction:column;font-size:0.85rem}
+.table-action{background:#eee;color:#333;padding:6px 8px;border-radius:6px;border:1px solid #ddd;margin-left:6px}
+.table-action.delete{background:#ff6b6b;color:#fff;border-color:#ff6b6b}
+.table-action.edit{background:#4a90e2;color:#fff;border-color:#4a90e2}
+.summary{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.summary .card{background:#fafafa;padding:8px;border-radius:6px;border:1px solid #eee;min-width:140px}
+.list-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{padding:8px;border-bottom:1px solid #f0f0f0;text-align:left;font-size:0.95rem}
+.report-actions{display:flex;gap:8px;margin-top:10px}
+.receipt{font-family:monospace;padding:6px;width:280px}
+.receipt h2{text-align:center;margin:6px 0}
+.small{text-align:center;font-size:0.8rem;margin-top:8px}
+
+.@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+:root{
+  --bg:#f6f8fb; --card:#ffffff; --accent:#ff8c42; --accent-2:#ff6b24; --muted:#6b7280; --surface:#fdfdfd;
+}
+*{box-sizing:border-box}
+body{font-family:Inter, system-ui, Arial, sans-serif;margin:0;background:var(--bg);color:#111}
+}
+.header h1{margin:0;font-size:1.6rem;font-weight:600}
+.subtitle{margin:6px 0 0;font-size:0.95rem;opacity:0.95}
+.container{max-width:980px;margin:20px auto;padding:14px}
+.form-card,.report-card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06);margin-bottom:16px}
+.form-card h2,.report-card h2{margin:0 0 14px}
+.row{display:flex;gap:12px}
+label{display:flex;flex-direction:column;flex:1;font-size:0.95rem}
+input,select{padding:10px;border:1px solid #e6e9ef;border-radius:8px;margin-top:8px;background:var(--surface)}
+.actions{display:flex;gap:8px;margin-top:12px}
+button{background:linear-gradient(180deg,var(--accent),var(--accent-2));color:#fff;border:none;padding:10px 14px;border-radius:10px;cursor:pointer;box-shadow:0 4px 8px rgba(255,140,66,0.18)}
+button[type="button"]{background:#6b7280}
+.filters{display:flex;gap:8px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.filters label{display:flex;flex-direction:column;font-size:0.85rem}
+.table-action{background:#f3f4f6;color:#111;padding:6px 8px;border-radius:8px;border:1px solid #e6e9ef;margin-left:6px}
+.table-action.delete{background:#ff6b6b;color:#fff;border-color:#ff6b6b}
+.table-action.edit{background:#4a90e2;color:#fff;border-color:#4a90e2}
+.summary{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.summary .card{background:linear-gradient(180deg,#fff,#fbfbfd);padding:10px;border-radius:10px;border:1px solid #eee;min-width:140px;box-shadow:0 2px 6px rgba(10,15,30,0.03)}
+.list-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse}
+thead th{background:#fafafa}
+tr:nth-child(even){background:#fbfbfb}
+th,td{padding:12px;border-bottom:1px solid #f0f0f0;text-align:left;font-size:0.95rem}
+.report-actions{display:flex;gap:8px;margin-top:12px}
+.receipt{font-family:monospace;padding:8px;width:320px}
+.receipt h2{text-align:center;margin:6px 0}
+.small{text-align:center;font-size:0.85rem;margin-top:10px}
+
+/* Responsive */
+@media (max-width:700px){
+  .row{flex-direction:column}
+  .container{padding:10px}
+  .receipt{width:220px}
+}
+
+/* Print styles for Elgin-like narrow receipt */
+@media print and (max-width:320px){
+  body *{visibility:hidden}
+  .receipt, .receipt *{visibility:visible}
+  .receipt{position:fixed;left:0;top:0;width:80mm}
+}
