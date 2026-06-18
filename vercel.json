@@ -9,4 +9,9 @@
       }
     }
   ]
+  ,
+  "routes": [
+    { "src": "^/$", "dest": "/react-app/" },
+    { "src": "^/(.*)", "dest": "/react-app/$1" }
+  ]
 }
