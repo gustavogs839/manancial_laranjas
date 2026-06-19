@@ -1,5 +1,17 @@
 import React from 'react'
 
+function formatDateLong(date){
+  const parsed = typeof date === 'string'
+    ? new Date(Number(date.slice(0,4)), Number(date.slice(5,7)) - 1, Number(date.slice(8,10)))
+    : date
+  return new Intl.DateTimeFormat('pt-BR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(parsed).replace(',', '')
+}
+
 export default function TxTable({ txs, onDelete, onEditStart }){
   return (
     <div className="list-wrap">
@@ -10,7 +22,7 @@ export default function TxTable({ txs, onDelete, onEditStart }){
         <tbody>
           {txs.slice().reverse().map(tx=> (
             <tr key={tx.id}>
-              <td>{tx.date}</td>
+              <td>{formatDateLong(tx.date)}</td>
               <td>
                 <span className={`badge ${tx.type==='entrada'? 'entrada':'saida'}`}>{tx.type.toUpperCase()}</span>
               </td>

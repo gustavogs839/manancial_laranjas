@@ -15,7 +15,7 @@ function parseIsoDate(date){
   if(!date) return new Date()
   if(typeof date === 'string'){
     const [year, month, day] = date.split('-')
-    return new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)))
+    return new Date(Number(year), Number(month) - 1, Number(day))
   }
   return date
 }
@@ -92,7 +92,7 @@ function render(){
   tbody.innerHTML = ''
   list.slice().reverse().forEach(tx => {
     const tr = document.createElement('tr')
-    tr.innerHTML = `<td>${tx.date}</td><td>${tx.type}</td><td>${tx.method}</td><td>${tx.desc}</td><td>R$ ${tx.amount.toFixed(2)}</td><td><button class="table-action edit" data-id="${tx.id}">Editar</button><button class="table-action delete" data-id="${tx.id}">Excluir</button></td>`
+    tr.innerHTML = `<td>${formatDateLong(tx.date)}</td><td>${tx.type}</td><td>${tx.method}</td><td>${tx.desc}</td><td>R$ ${tx.amount.toFixed(2)}</td><td><button class="table-action edit" data-id="${tx.id}">Editar</button><button class="table-action delete" data-id="${tx.id}">Excluir</button></td>`
     tbody.appendChild(tr)
   })
   renderSummary(list)
@@ -198,7 +198,17 @@ async function exportPdf(){
         const dateCell = cells[0]
         const dateText = dateCell.textContent.trim()
         const longDate = dateText ? formatDateLong(dateText) : ''
-            dateCell.innerHTML = `<div style="font-size:0.85rem;color:#333">${longDate}</div>`
+        dateCell.innerHTML = `<div style="font-size:0.85rem;color:#333">${longDate}</div>`
+        if(cells.length > 1) cells[cells.length - 1].remove()
+      }
+    })
+  }
+
+  const wrap = document.createElement('div')
+  wrap.style.position = 'fixed'
+  wrap.style.left = '-10000px'
+  wrap.style.top = '0'
+  wrap.appendChild(clone)
   document.body.appendChild(wrap)
 
   const canvas = await html2canvas(clone, {scale:2, useCORS:true, allowTaint:false})

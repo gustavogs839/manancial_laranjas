@@ -14,7 +14,7 @@ function parseIsoDate(date){
   if(!date) return new Date()
   if(typeof date === 'string'){
     const [year, month, day] = date.split('-')
-    return new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)))
+    return new Date(Number(year), Number(month) - 1, Number(day))
   }
   return date
 }
@@ -46,7 +46,7 @@ export async function exportPdfFromElement(el, filename='relatorio.pdf'){
         const dateCell = cells[0]
         const dateText = dateCell.textContent.trim()
         const longDate = dateText ? formatDateLong(dateText) : ''
-        dateCell.innerHTML = `<div>${dateText}</div><div style="font-size:0.75rem;color:#555">${longDate}</div>`
+        dateCell.innerHTML = `<div style="font-size:0.75rem;color:#555">${longDate}</div>`
         if(cells.length > 1) cells[cells.length - 1].remove()
       }
     })
