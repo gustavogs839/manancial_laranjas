@@ -83,7 +83,7 @@ export function printElginFromTxs(txs){
   const sectionHtml = (title, items) => {
     let html = `<h3>${title}</h3><hr>`
     if(items.length===0) html += `<p>— nenhum —</p>`
-    else items.forEach(t=> html += `<p>${t.date} | ${t.method} | R$ ${t.amount.toFixed(2)} ${t.desc? ' - '+t.desc: ''}</p>`)
+    else items.forEach(t=> html += `<p>${formatDateLong(t.date)} | ${t.method} | R$ ${t.amount.toFixed(2)} ${t.desc? ' - '+t.desc: ''}</p>`)
     return html
   }
 

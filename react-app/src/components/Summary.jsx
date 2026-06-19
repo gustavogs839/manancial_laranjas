@@ -12,6 +12,8 @@ export default function Summary({ txs, filter, setFilter }){
     totals[t.method] = (totals[t.method]||0) + (t.type === 'entrada' ? t.amount : -t.amount)
   })
 
+  const today = new Date().toISOString().slice(0,10)
+
   return (
     <>
       <div className="summary">
@@ -25,7 +27,8 @@ export default function Summary({ txs, filter, setFilter }){
       <div className="filters">
         <label>De: <input type="date" value={filter.start} onChange={e=>setFilter(f=>({...f, start: e.target.value}))} /></label>
         <label>Até: <input type="date" value={filter.end} onChange={e=>setFilter(f=>({...f, end: e.target.value}))} /></label>
-        <button onClick={()=>setFilter({start:'',end: new Date().toISOString().slice(0,10)})}>Limpar filtro</button>
+        <button onClick={()=>setFilter({start:today,end:today})}>Hoje</button>
+        <button onClick={()=>setFilter({start:'',end: today})}>Limpar filtro</button>
       </div>
     </>
   )

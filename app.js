@@ -36,6 +36,7 @@ function bind(){
   $('#exportPdf').addEventListener('click', exportPdf)
   $('#printElgin').addEventListener('click', printElgin)
   $('#applyFilter').addEventListener('click', applyFilter)
+  $('#todayFilter').addEventListener('click', filterToday)
   $('#clearFilter').addEventListener('click', clearFilter)
   $('#txTable tbody').addEventListener('click', onTableClick)
 }
@@ -144,6 +145,13 @@ function applyFilter(){
     return true
   })
   render()
+}
+
+function filterToday(){
+  const today = formatIsoDate()
+  $('#filterStart').value = today
+  $('#filterEnd').value = today
+  applyFilter()
 }
 
 function clearFilter(){
