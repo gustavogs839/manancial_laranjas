@@ -7,13 +7,27 @@ let currentView = null // lista atual mostrada (filtro aplicado)
 const $ = sel => document.querySelector(sel)
 const $$ = sel => document.querySelectorAll(sel)
 
+function formatIsoDate(date = new Date()){
+  return date.toISOString().slice(0,10)
+}
+
+function formatDateLong(date = new Date()){
+  const parsed = typeof date === 'string' ? new Date(date) : date
+  return new Intl.DateTimeFormat('pt-BR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(parsed).replace(',', '')
+}
+
 function init(){
   bind()
   load()
   render()
-  // preenche a data com a data atual por padrão
-  const today = new Date().toISOString().slice(0,10)
+  const today = formatIsoDate()
   if(!$('#date').value) $('#date').value = today
+  if(!$('#filterEnd').value) $('#filterEnd').value = today
 }
 
 function bind(){
@@ -134,7 +148,7 @@ function applyFilter(){
 
 function clearFilter(){
   $('#filterStart').value = ''
-  $('#filterEnd').value = ''
+  $('#filterEnd').value = formatIsoDate()
   currentView = null
   render()
 }
@@ -156,6 +170,22 @@ async function exportPdf(){
   }).format(new Date()).replace(',', '')
   header.innerHTML = `<h2 style="margin:0">Manancial Laranjas</h2><div style="font-size:0.9rem;color:#555">Relatório — ${dateStr}</div>`
   clone.insertBefore(header, clone.firstChild)
+
+  const table = clone.querySelector('#txTable')
+  if(table){
+    const ths = table.querySelectorAll('thead th')
+    if(ths.length) ths[ths.length - 1].remove()
+    table.querySelectorAll('tbody tr').forEach(tr=>{
+      const cells = tr.querySelectorAll('td')
+      if(cells.length){
+        const dateCell = cells[0]
+        const dateText = dateCell.textContent.trim()
+        const longDate = dateText ? formatDateLong(dateText) : ''
+        dateCell.innerHTML = `<div>${dateText}</div><div style="font-size:0.75rem;color:#555">${longDate}</div>`
+        if(cells.length > 1) cells[cells.length - 1].remove()
+      }
+    })
+  }
 
   const wrap = document.createElement('div')
   wrap.style.position = 'fixed'

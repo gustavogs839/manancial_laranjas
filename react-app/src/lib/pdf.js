@@ -10,12 +10,39 @@ function formatReportDate(date = new Date()){
   }).format(date).replace(',', '')
 }
 
+function formatDateLong(date = new Date()){
+  const parsed = typeof date === 'string' ? new Date(date) : date
+  return new Intl.DateTimeFormat('pt-BR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  }).format(parsed).replace(',', '')
+}
+
 export async function exportPdfFromElement(el, filename='relatorio.pdf'){
   // Clona o elemento para remover controles interativos antes de renderizar
   const clone = el.cloneNode(true)
   // Remove botões e elementos que não devem aparecer no PDF
   const unwanted = clone.querySelectorAll('.table-action, .report-actions, .filters, button')
   unwanted.forEach(n=>n.remove())
+  // Ajusta tabela para o PDF
+  const table = clone.querySelector('table')
+  if(table){
+    const ths = table.querySelectorAll('thead th')
+    if(ths.length) ths[ths.length - 1].remove()
+    table.querySelectorAll('tbody tr').forEach(tr => {
+      const cells = tr.querySelectorAll('td')
+      if(cells.length){
+        const dateCell = cells[0]
+        const dateText = dateCell.textContent.trim()
+        const longDate = dateText ? formatDateLong(dateText) : ''
+        dateCell.innerHTML = `<div>${dateText}</div><div style="font-size:0.75rem;color:#555">${longDate}</div>`
+        if(cells.length > 1) cells[cells.length - 1].remove()
+      }
+    })
+  }
+
   // Insere data do relatório no topo
   const header = document.createElement('div')
   header.style.textAlign = 'center'

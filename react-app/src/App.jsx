@@ -7,9 +7,11 @@ import { loadTxs, saveTxs } from './lib/storage'
 import { login, logout, subscribeAuthState } from './lib/auth'
 import { exportPdfFromElement } from './lib/pdf'
 
+const today = new Date().toISOString().slice(0,10)
+
 export default function App(){
   const [txs, setTxs] = useState([])
-  const [filter, setFilter] = useState({start:'', end:''})
+  const [filter, setFilter] = useState({start:'', end: today})
   const [editing, setEditing] = useState(null)
   const [authenticated, setAuthenticated] = useState(false)
 
