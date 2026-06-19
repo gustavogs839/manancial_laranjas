@@ -11,8 +11,17 @@ function formatIsoDate(date = new Date()){
   return date.toISOString().slice(0,10)
 }
 
+function parseIsoDate(date){
+  if(!date) return new Date()
+  if(typeof date === 'string'){
+    const [year, month, day] = date.split('-')
+    return new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)))
+  }
+  return date
+}
+
 function formatDateLong(date = new Date()){
-  const parsed = typeof date === 'string' ? new Date(date) : date
+  const parsed = parseIsoDate(date)
   return new Intl.DateTimeFormat('pt-BR', {
     weekday: 'long',
     day: 'numeric',
@@ -189,17 +198,7 @@ async function exportPdf(){
         const dateCell = cells[0]
         const dateText = dateCell.textContent.trim()
         const longDate = dateText ? formatDateLong(dateText) : ''
-        dateCell.innerHTML = `<div>${dateText}</div><div style="font-size:0.75rem;color:#555">${longDate}</div>`
-        if(cells.length > 1) cells[cells.length - 1].remove()
-      }
-    })
-  }
-
-  const wrap = document.createElement('div')
-  wrap.style.position = 'fixed'
-  wrap.style.left = '-10000px'
-  wrap.style.top = '0'
-  wrap.appendChild(clone)
+            dateCell.innerHTML = `<div style="font-size:0.85rem;color:#333">${longDate}</div>`
   document.body.appendChild(wrap)
 
   const canvas = await html2canvas(clone, {scale:2, useCORS:true, allowTaint:false})

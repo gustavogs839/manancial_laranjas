@@ -10,8 +10,17 @@ function formatReportDate(date = new Date()){
   }).format(date).replace(',', '')
 }
 
+function parseIsoDate(date){
+  if(!date) return new Date()
+  if(typeof date === 'string'){
+    const [year, month, day] = date.split('-')
+    return new Date(Date.UTC(Number(year), Number(month) - 1, Number(day)))
+  }
+  return date
+}
+
 function formatDateLong(date = new Date()){
-  const parsed = typeof date === 'string' ? new Date(date) : date
+  const parsed = parseIsoDate(date)
   return new Intl.DateTimeFormat('pt-BR', {
     weekday: 'long',
     day: 'numeric',
