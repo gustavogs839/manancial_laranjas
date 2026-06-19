@@ -92,7 +92,7 @@ function render(){
   tbody.innerHTML = ''
   list.slice().reverse().forEach(tx => {
     const tr = document.createElement('tr')
-    tr.innerHTML = `<td>${formatDateLong(tx.date)}</td><td>${tx.type}</td><td>${tx.method}</td><td>${tx.desc}</td><td>R$ ${tx.amount.toFixed(2)}</td><td><button class="table-action edit" data-id="${tx.id}">Editar</button><button class="table-action delete" data-id="${tx.id}">Excluir</button></td>`
+    tr.innerHTML = `<td data-iso="${tx.date}">${formatDateLong(tx.date)}</td><td>${tx.type}</td><td>${tx.method}</td><td>${tx.desc}</td><td>R$ ${tx.amount.toFixed(2)}</td><td><button class="table-action edit" data-id="${tx.id}">Editar</button><button class="table-action delete" data-id="${tx.id}">Excluir</button></td>`
     tbody.appendChild(tr)
   })
   renderSummary(list)
@@ -196,16 +196,8 @@ async function exportPdf(){
       const cells = tr.querySelectorAll('td')
       if(cells.length){
         const dateCell = cells[0]
-        const dateText = dateCell.textContent.trim()
-        const longDate = dateText ? formatDateLong(dateText) : ''
-        dateCell.innerHTML = `<div style="font-size:0.85rem;color:#333">${longDate}</div>`
-        if(cells.length > 1) cells[cells.length - 1].remove()
-      }
-    })
-  }
-
-  const wrap = document.createElement('div')
-  wrap.style.position = 'fixed'
+          const isoDate = dateCell.dataset.iso || dateCell.textContent.trim()
+          const longDate = isoDate ? formatDateLong(isoDate) : ''
   wrap.style.left = '-10000px'
   wrap.style.top = '0'
   wrap.appendChild(clone)
