@@ -22,7 +22,7 @@ export default function TxTable({ txs, onDelete, onEditStart }){
         <tbody>
           {txs.slice().reverse().map(tx=> (
             <tr key={tx.id}>
-              <td>{formatDateLong(tx.date)}</td>
+              <td data-iso={tx.date}>{formatDateLong(tx.date)}</td>
               <td>
                 <span className={`badge ${tx.type==='entrada'? 'entrada':'saida'}`}>{tx.type.toUpperCase()}</span>
               </td>

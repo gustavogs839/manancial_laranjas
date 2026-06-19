@@ -13,10 +13,13 @@ function formatReportDate(date = new Date()){
 function parseIsoDate(date){
   if(!date) return new Date()
   if(typeof date === 'string'){
-    const [year, month, day] = date.split('-')
-    return new Date(Number(year), Number(month) - 1, Number(day))
+    const isoMatch = date.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+    if(isoMatch){
+      const [, year, month, day] = isoMatch
+      return new Date(Number(year), Number(month) - 1, Number(day))
+    }
   }
-  return date
+  return new Date(date)
 }
 
 function formatDateLong(date = new Date()){
@@ -44,8 +47,8 @@ export async function exportPdfFromElement(el, filename='relatorio.pdf'){
       const cells = tr.querySelectorAll('td')
       if(cells.length){
         const dateCell = cells[0]
-        const dateText = dateCell.textContent.trim()
-        const longDate = dateText ? formatDateLong(dateText) : ''
+        const isoDate = dateCell.dataset.iso || dateCell.textContent.trim()
+        const longDate = isoDate ? formatDateLong(isoDate) : ''
         dateCell.innerHTML = `<div style="font-size:0.75rem;color:#555">${longDate}</div>`
         if(cells.length > 1) cells[cells.length - 1].remove()
       }

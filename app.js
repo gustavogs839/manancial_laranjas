@@ -196,8 +196,16 @@ async function exportPdf(){
       const cells = tr.querySelectorAll('td')
       if(cells.length){
         const dateCell = cells[0]
-          const isoDate = dateCell.dataset.iso || dateCell.textContent.trim()
-          const longDate = isoDate ? formatDateLong(isoDate) : ''
+        const isoDate = dateCell.dataset.iso || dateCell.textContent.trim()
+        const longDate = isoDate ? formatDateLong(isoDate) : ''
+        dateCell.innerHTML = `<div style="font-size:0.85rem;color:#333">${longDate}</div>`
+        if(cells.length > 1) cells[cells.length - 1].remove()
+      }
+    })
+  }
+
+  const wrap = document.createElement('div')
+  wrap.style.position = 'fixed'
   wrap.style.left = '-10000px'
   wrap.style.top = '0'
   wrap.appendChild(clone)
